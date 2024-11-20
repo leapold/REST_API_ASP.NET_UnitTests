@@ -1,0 +1,78 @@
+﻿@model VehicleModel
+
+@{
+    ViewData["Title"] = "Vehicle Cost Calculator";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <form asp-action="CalculateFees" method="post" id="vehicleForm">
+        <div class="row">
+            <div class="col-2" style="padding: 10px;">
+                <div class="form-group">
+                    <label for="BasePrice">Vehicle Base Price</label>
+                    <input asp-for="BasePrice" class="form-control" min="0" required />
+                   
+                </div>
+            </div>
+
+            <div class="col-2" style="padding: 10px;">
+                <div class="form-group">
+                    <label for="VehicleType">Vehicle Type</label>
+                    <select class="form-select" asp-for="VehicleType" class="form-control" required>
+                        <option value="Common">Common</option>
+                        <option value="Luxury">Luxury</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <span asp-validation-for="BasePrice" class="text-danger"></span>
+    </form>
+
+
+
+</div>
+@if (Model.History != null)
+{
+    <h3 class="my-4">Calculation History</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Vehicle Type</th>
+                <th>Base Price</th>
+                <th>Basic Buyer Fee</th>
+                <th>Seller's Special Fee</th>
+                <th>Association Cost</th>
+                <th>Storage Fee</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.History)
+            {
+                <tr>
+                    <td>@item.VehicleType</td>
+                    <td>@item.BasePrice.ToString("F2")</td>
+                    <td>@item.BasicBuyerFee.ToString("F2")</td>
+                    <td>@item.SellersSpecialFee.ToString("F2")</td>
+                    <td>@item.AssociationCost.ToString("F2")</td>
+                    <td>@item.StorageFee.ToString("F2")</td>
+                    <td>@item.TotalCost.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById('BasePrice').addEventListener('input', function () {
+            document.getElementById('vehicleForm').submit();
+        });
+
+        document.getElementById('VehicleType').addEventListener('change', function () {
+            document.getElementById('vehicleForm').submit();
+        });
+    </script>
+}
