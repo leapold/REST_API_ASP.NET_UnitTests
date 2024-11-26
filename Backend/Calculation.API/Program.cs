@@ -1,5 +1,5 @@
 
-using Calculation.Application.Services;
+using Calculation.Application;
 
 namespace Calculation.API
 {
@@ -23,7 +23,7 @@ namespace Calculation.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<IVehicleService, VehicleService>();
+            builder.Services.AddApplication();
 
             var app = builder.Build();
 
